@@ -64,8 +64,8 @@ router.post(
                 user,
             });
         } catch (err) {
-            console.error('Register error:', err);
-            res.status(500).json({ error: 'Server error' });
+            // Pass to global error handler for debugging details
+            next(err);
         }
     }
 );
@@ -124,8 +124,7 @@ router.post(
                 },
             });
         } catch (err) {
-            console.error('Login error:', err);
-            res.status(500).json({ error: 'Server error' });
+            next(err);
         }
     }
 );
