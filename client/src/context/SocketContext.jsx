@@ -19,9 +19,19 @@ export const SocketProvider = ({ children }) => {
             return;
         }
 
-        const newSocket = io(window.location.origin, {
+        // In production, we want to connect to the same origin (backend serves frontend)
+        // BUT if they are separate, we need the backend URL.
+        // Since we are using a proxy in dev, and Vercel rewrites in prod, window.location.origin is actually correct for Vercel
+        // IF the rewrite is working.
+        // However, let's be explicit to avoid issues.
+        const socketUrl = import.meta.env.VITE_API_URL || window.location.origin;
+        console.log('Connecting socket to:', socketUrl);
+
+        const newSocket = io(socketUrl, {
             auth: { token },
             transports: ['websocket', 'polling'],
+            path: '/socket.io/', // Explicit path
+            withCredentials: true,
         });
 
         newSocket.on('connect', () => {

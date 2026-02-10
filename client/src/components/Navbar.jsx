@@ -99,7 +99,7 @@ const Navbar = () => {
                                         <span>{user.name?.charAt(0).toUpperCase()}</span>
                                     )}
                                 </div>
-                                <span className="navbar-username">{user.name?.split(' ')[0]}</span>
+                                <span className="navbar-username">{user?.name?.split(' ')[0] || 'User'}</span>
                                 <ChevronDown size={14} className={`navbar-chevron ${profileOpen ? 'open' : ''}`} />
                             </button>
 
