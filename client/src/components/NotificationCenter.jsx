@@ -19,9 +19,16 @@ const NotificationCenter = () => {
     useEffect(() => {
         const saved = localStorage.getItem(`notifications_${user?.id}`);
         if (saved) {
-            const parsed = JSON.parse(saved);
-            setNotifications(parsed);
-            setUnreadCount(parsed.filter(n => !n.read).length);
+            try {
+                const parsed = JSON.parse(saved);
+                if (Array.isArray(parsed)) {
+                    setNotifications(parsed);
+                    setUnreadCount(parsed.filter(n => !n.read).length);
+                }
+            } catch (e) {
+                console.error("Failed to parse notifications", e);
+                localStorage.removeItem(`notifications_${user?.id}`);
+            }
         }
     }, [user?.id]);
 
