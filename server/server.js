@@ -63,6 +63,38 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// DEBUG: Check Environment
+app.get('/api/debug', (req, res) => {
+    res.json({
+        status: 'alive',
+        env: {
+            node_env: process.env.NODE_ENV,
+            has_db_url: !!process.env.DATABASE_URL,
+            db_url_masked: process.env.DATABASE_URL ? process.env.DATABASE_URL.replace(/:[^:@]*@/, ':****@') : 'MISSING',
+            port: process.env.PORT
+        }
+    });
+});
+
+// DEBUG: Check Database Connection
+app.get('/api/debug-db', async (req, res) => {
+    try {
+        const result = await db.query('SELECT NOW() as now');
+        res.json({
+            status: 'connected',
+            time: result.rows[0].now,
+            connection_string_used: process.env.DATABASE_URL ? 'Yes (Masked)' : 'No'
+        });
+    } catch (err) {
+        console.error('DB Debug Error:', err);
+        res.status(500).json({
+            error: 'DB Connection Failed',
+            details: err.message,
+            code: err.code
+        });
+    }
+});
+
 // ==========================================
 // Auction Auto-Ending Scheduler
 // ==========================================
