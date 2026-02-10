@@ -22,7 +22,9 @@ const Login = () => {
             toast.success('Welcome back!');
             navigate('/browse');
         } catch (err) {
-            toast.error(err.response?.data?.error || 'Login failed');
+            console.error("Login Error:", err);
+            const errorMsg = err.response?.data?.error || 'Login failed';
+            toast.error(typeof errorMsg === 'string' ? errorMsg : JSON.stringify(errorMsg));
         } finally {
             setLoading(false);
         }

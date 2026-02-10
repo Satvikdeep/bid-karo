@@ -33,21 +33,31 @@ export const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         const res = await api.post('/auth/login', { email, password });
         const { token: newToken, user: newUser } = res.data;
-        localStorage.setItem('bid_karo_token', newToken);
-        localStorage.setItem('bid_karo_user', JSON.stringify(newUser));
-        setToken(newToken);
-        setUser(newUser);
-        return newUser;
+        if (newUser && typeof newUser === 'object' && !newUser.code) {
+            setUser(newUser);
+            localStorage.setItem('bid_karo_user', JSON.stringify(newUser));
+            setToken(newToken);
+            localStorage.setItem('bid_karo_token', newToken);
+            return newUser;
+        } else {
+            console.error("Invalid user object received during login:", newUser);
+            throw new Error("Invalid user data received");
+        }
     };
 
     const register = async (data) => {
         const res = await api.post('/auth/register', data);
         const { token: newToken, user: newUser } = res.data;
-        localStorage.setItem('bid_karo_token', newToken);
-        localStorage.setItem('bid_karo_user', JSON.stringify(newUser));
-        setToken(newToken);
-        setUser(newUser);
-        return newUser;
+        if (newUser && typeof newUser === 'object' && !newUser.code) {
+            setUser(newUser);
+            localStorage.setItem('bid_karo_user', JSON.stringify(newUser));
+            setToken(newToken);
+            localStorage.setItem('bid_karo_token', newToken);
+            return newUser;
+        } else {
+            console.error("Invalid user object received during register:", newUser);
+            throw new Error("Invalid user data received");
+        }
     };
 
     const logout = () => {
