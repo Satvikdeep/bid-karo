@@ -1,0 +1,122 @@
+services:
+  # nginx reverse proxy
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+      - ./vhost:/etc/nginx/vhost.d
+      - ./html:/usr/share/nginx/html
+
+  # reverse proxy let's encrypt companion
+  nginx-proxy-acme:
+    image: nginxproxy/acme-companion
+    container_name: nginx-proxy-acme
+    restart: always
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./acme:/etc/acme.sh
+    environment:
+      - DEFAULT_EMAIL=matthew.s13542@gmail.com
+
+  # React frontend
+  frontend:
+    image: frontend
+    container_name: frontend
+    restart: always
+    environment:
+      # host for nginx reverse proxy
+      - VIRTUAL_HOST=${FRONTEND_DOMAIN}
+      # certificate information for let's encrypt
+      - LETSENCRYPT_HOST=${FRONTEND_DOMAIN}
+
+  # express backend
+  backend:
+    image: backend
+    container_name: backend
+    restart: always
+    environment:
+      # host for nginx reverse proxy
+      - VIRTUAL_HOST=${BACKEND_DOMAIN}
+      # certificate information for let's encrypt
+      - LETSENCRYPT_HOST=${BACKEND_DOMAIN}
+      # database configuration
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_DATABASE=${DB_DATABASE}
+      # backend environment variables
+      - FRONTEND_URL=${FRONTEND_URL}
+      - BACKEND_URL=${BACKEND_URL}
+      - GCS_FILENAME=/run/secrets/gcs_credentials
+      - GCS_ID=${GCS_ID}
+      - GCS_BUCKET=${GCS_BUCKET}
+      - EMAIL_USER=${EMAIL_USER}
+      - GOOGLE_MAPS_API_KEY_BACKEND=${GOOGLE_MAPS_API_KEY_BACKEND}
+      # secrets
+      - SECRET_FILES=DB_USER,DB_PASSWORD,SESSION_SECRET,CSRF_SECRET,GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET,GEMINI_API_KEY,EMAIL_PASSWORD
+      - DB_USER_FILE=/run/secrets/db_user
+      - DB_PASSWORD_FILE=/run/secrets/db_password
+      - CSRF_SECRET_FILE=/run/secrets/csrf_secret
+      - SESSION_SECRET_FILE=/run/secrets/session_secret
+      - GOOGLE_CLIENT_ID_FILE=/run/secrets/google_client_id
+      - GOOGLE_CLIENT_SECRET_FILE=/run/secrets/google_client_secret
+      - GEMINI_API_KEY_FILE=/run/secrets/gemini_api_key
+      - EMAIL_PASSWORD_FILE=/run/secrets/email_password
+    secrets:
+      - db_user
+      - db_password
+      - session_secret
+      - csrf_secret
+      - google_client_id
+      - google_client_secret
+      - gemini_api_key
+      - email_password
+      - gcs_credentials
+
+  # postgres database
+  database:
+    image: postgres:16
+    container_name: database
+    restart: always
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      # host for nginx reverse proxy
+      - VIRTUAL_HOST=${DB_HOST}
+      # database configuration
+      - POSTGRES_DB=${DB_DATABASE}
+      # secrets
+      - POSTGRES_USER_FILE=/run/secrets/db_user
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db_password
+    secrets:
+      - db_user
+      - db_password
+
+secrets:
+  db_user:
+    environment: "DB_USER"
+  db_password:
+    environment: "DB_PASSWORD"
+  session_secret:
+    environment: "SESSION_SECRET"
+  csrf_secret:
+    environment: "CSRF_SECRET"
+  google_client_id:
+    environment: "GOOGLE_CLIENT_ID"
+  google_client_secret:
+    environment: "GOOGLE_CLIENT_SECRET"
+  gemini_api_key:
+    environment: "GEMINI_API_KEY"
+  email_password:
+    environment: "EMAIL_PASSWORD"
+  gcs_credentials:
+    file: ./gcs-storage-credentials.json

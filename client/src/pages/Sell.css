@@ -1,0 +1,198 @@
+/* Sell Page — Editorial Theme */
+.sell-header {
+    text-align: center;
+    margin-bottom: 48px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.sell-title {
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+    font-family: var(--font-heading);
+}
+
+.sell-subtitle {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* Steps - Newspaper style numbers */
+.sell-steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 48px;
+}
+
+.sell-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.sell-step-number {
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    /* No circle */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    background: transparent;
+    color: var(--text-muted);
+    border-bottom: 1px solid transparent;
+}
+
+/* Add leading zero via CSS if possible, or assume content handles it. 
+   Assuming content is just "1", "2", "3". Let's style them as plain text. 
+*/
+
+.sell-step.active {
+    color: var(--text-primary);
+}
+
+.sell-step.active .sell-step-number {
+    background: transparent;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--text-primary);
+}
+
+.sell-step.completed .sell-step-number {
+    background: transparent;
+    color: var(--text-primary);
+}
+
+.sell-step-connector {
+    width: 24px;
+    height: 1px;
+    background: var(--border-light);
+    border-radius: 0;
+}
+
+.sell-step-connector.active {
+    background: var(--text-primary);
+}
+
+/* Form card - transparent */
+.sell-form-card {
+    max-width: 640px;
+    margin: 0 auto;
+    background: transparent;
+    border-radius: 0;
+    padding: 48px;
+    box-shadow: none;
+    border: 1px solid var(--border-light);
+}
+
+.sell-form-title {
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+    font-family: var(--font-heading);
+    text-align: center;
+}
+
+/* Image upload */
+.sell-image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.sell-image-upload-btn {
+    aspect-ratio: 1;
+    border: 1px dashed var(--border-alt);
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--bg-primary);
+    color: var(--text-muted);
+}
+
+.sell-image-upload-btn:hover {
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+}
+
+.sell-image-upload-btn span {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.sell-image-preview {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 0;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+}
+
+.sell-image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(20%);
+    transition: filter 0.2s;
+}
+
+.sell-image-preview:hover img {
+    filter: grayscale(0%);
+}
+
+.sell-image-remove {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 0;
+    background: var(--text-primary);
+    color: var(--text-inverse);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.sell-image-preview:hover .sell-image-remove {
+    opacity: 1;
+}
+
+/* Actions */
+.sell-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 48px;
+    gap: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-light);
+}
+
+.sell-actions .btn {
+    min-width: 120px;
+}

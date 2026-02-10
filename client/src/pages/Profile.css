@@ -1,0 +1,80 @@
+/* Profile — Editorial Theme */
+.profile-container {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 60px 0;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin-bottom: 48px;
+    padding: 32px;
+    background: transparent;
+    border: 1px solid var(--border-light);
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.profile-avatar-large {
+    width: 80px;
+    height: 80px;
+    border-radius: 0;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.profile-avatar-large img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(20%);
+}
+
+.profile-avatar-large span {
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+}
+
+.profile-name {
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+    font-family: var(--font-heading);
+}
+
+.profile-email {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.profile-form {
+    background: transparent;
+    border-radius: 0;
+    padding: 32px;
+    border: 1px solid var(--border-light);
+    box-shadow: none;
+}
+
+.profile-section-title {
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 12px;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}

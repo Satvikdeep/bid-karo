@@ -1,0 +1,417 @@
+/* Auction Detail - Newspaper Style */
+.ad-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 40px;
+    margin-top: 24px;
+    align-items: start;
+}
+
+.ad-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-family: 'Courier Prime', monospace;
+    font-size: 14px;
+    text-decoration: none;
+    margin-bottom: 24px;
+    transition: color 0.2s;
+    border-bottom: 1px solid transparent;
+}
+
+.ad-back:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+/* Images */
+.ad-images {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.ad-main-image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: #f0f0f0;
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    cursor: zoom-in;
+}
+
+.ad-main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: filter 0.3s, transform 0.5s;
+}
+
+.ad-main-image:hover img {
+    filter: grayscale(0%);
+    transform: scale(1.02);
+}
+
+.ad-urgent-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--warning);
+    color: #000;
+    padding: 6px 12px;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #000;
+    z-index: 2;
+}
+
+.ad-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 12px;
+}
+
+.ad-thumbnail {
+    aspect-ratio: 1;
+    border: 1px solid var(--border-color);
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.ad-thumbnail.active {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+}
+
+.ad-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+}
+
+.ad-thumbnail:hover img,
+.ad-thumbnail.active img {
+    filter: grayscale(0%);
+}
+
+/* Info Section */
+.ad-info {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    border-left: 1px solid var(--border-color);
+    padding-left: 40px;
+}
+
+.ad-status-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+}
+
+.ad-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.ad-seller-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-light);
+    font-size: 14px;
+    padding-bottom: 24px;
+    border-bottom: 3px double var(--border-color);
+}
+
+/* Price & Timer Card - Deconstructed */
+.ad-price-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.ad-price-section {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ad-price-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--text-light);
+}
+
+.ad-price-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: #2C2C2C;
+    font-style: italic;
+}
+
+.ad-price-bids {
+    font-size: 14px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Timer */
+.ad-timer-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ad-timer-blocks {
+    display: flex;
+    gap: 16px;
+}
+
+.ad-timer-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 40px;
+}
+
+.ad-timer-num {
+    font-family: 'Courier Prime', monospace;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.ad-timer-unit {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-light);
+}
+
+.ad-timer-blocks.urgent .ad-timer-num {
+    color: var(--warning);
+}
+
+/* Bid Form */
+.ad-bid-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px;
+    background: var(--bg-paper);
+    border: 1px solid var(--border-color);
+    position: relative;
+    margin-top: 8px;
+}
+
+.ad-bid-form::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    right: -6px;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--border-color);
+    z-index: -1;
+}
+
+.ad-bid-input-wrapper {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--text-primary);
+    padding-bottom: 8px;
+}
+
+.ad-bid-currency {
+    font-size: 24px;
+    font-family: 'Playfair Display', serif;
+    margin-right: 8px;
+}
+
+.ad-bid-input {
+    border: none;
+    background: transparent;
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    width: 100%;
+    outline: none;
+}
+
+.ad-bid-btn {
+    width: 100%;
+    border-radius: 0;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-top: 8px;
+}
+
+.ad-bid-hint {
+    font-size: 12px;
+    color: var(--text-light);
+    text-align: center;
+    font-family: 'Courier Prime', monospace;
+}
+
+/* Details */
+.ad-details-heading {
+    margin-top: 32px;
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+}
+
+.ad-description {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    color: var(--text-secondary);
+}
+
+.ad-specs {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.ad-spec {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.ad-spec-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    letter-spacing: 0.5px;
+}
+
+.ad-spec-value {
+    font-weight: 600;
+}
+
+/* Bid History */
+.ad-bid-list {
+    border: 1px solid var(--border-color);
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.ad-bid-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.ad-bid-item:last-child {
+    border-bottom: none;
+}
+
+.ad-bid-item.highest {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.ad-bidder-name {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.ad-bid-time {
+    font-size: 11px;
+    color: var(--text-light);
+    display: block;
+    margin-top: 2px;
+    font-family: 'Courier Prime', monospace;
+}
+
+.ad-bid-amount {
+    font-family: 'Courier Prime', monospace;
+    font-weight: 700;
+}
+
+/* Lightbox Modal */
+.lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(235, 232, 224, 0.95);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: zoom-out;
+    animation: fadeIn 0.3s ease;
+}
+
+.lightbox-img {
+    max-width: 90%;
+    max-height: 90%;
+    border: 1px solid var(--border-color);
+    box-shadow: 20px 20px 0px rgba(0, 0, 0, 0.1);
+    cursor: default;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-primary);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .ad-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .ad-info {
+        border-left: none;
+        padding-left: 0;
+        border-top: 1px solid var(--border-color);
+        padding-top: 24px;
+    }
+}
