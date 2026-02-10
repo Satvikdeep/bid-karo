@@ -153,8 +153,15 @@ const checkEndedAuctions = async () => {
     }
 };
 
-// Check for ended auctions every 10 seconds
-setInterval(checkEndedAuctions, 10000);
+// Check for ended auctions every 10 seconds (ONLY IN DEV)
+// In production, Serverless functions die immediately, so this interval prevents the function from finishing, causing a timeout/crash.
+if (process.env.NODE_ENV !== 'production') {
+    setInterval(checkEndedAuctions, 10000);
+} else {
+    // In production, we'll check ONCE per request (lazy check) or specifically when hitting a dashboard
+    // For now, let's just disable the loop to fix the crash.
+    console.log("Skipping background auction check loop in Serverless environment.");
+}
 
 // ==========================================
 // Error handling
