@@ -129,7 +129,13 @@ setInterval(checkEndedAuctions, 10000);
 // ==========================================
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).json({ error: 'Something went wrong!' });
+    // TEMPORARY: Return full error details to debug Vercel 500 issue
+    res.status(500).json({
+        error: 'Server error',
+        message: err.message,
+        stack: process.env.NODE_ENV === 'production' ? 'Hidden in prod' : err.stack,
+        details: err
+    });
 });
 
 // ==========================================
